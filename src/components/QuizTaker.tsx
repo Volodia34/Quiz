@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { useParams } from 'react-router-dom';
 import { getQuiz } from '../utils/localStorage';
 import QuizItem from './QuizItem';
@@ -34,17 +34,18 @@ const QuizTaker: React.FC = () => {
         }
     }, [id]);
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         let newScore = 0;
         answers.forEach((answerPair, index) => {
             answerPair.forEach(answer => {
                 if (quiz && quiz.questions[index].correctAnswers.includes(answer)) {
-                    newScore += quiz.questions[index].points ?? 1; // Додали points до розрахунку
+                    newScore += quiz.questions[index].points ?? 1;
                 }
             });
         });
         setScore(newScore);
-    };
+    }, [answers, quiz]);
+
 
     useEffect(() => {
         if (timeLeft !== null && timeLeft > 0) {
