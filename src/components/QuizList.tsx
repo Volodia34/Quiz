@@ -17,7 +17,7 @@ const QuizList: React.FC = () => {
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Quiz List</h1>
-            <Link to="/add" className="btn btn-primary mb-4">Add Quiz</Link>
+            <Link to="/add" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">Add Quiz</Link>
             <ul>
                 {quizzes.map(quiz => (
                     <li key={quiz.id} className="flex justify-between items-center my-2 p-2 border rounded">
