@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getQuiz } from '../utils/localStorage';
 import QuizItem from './QuizItem';
-import {logDOM} from "@testing-library/react";
 
 interface Quiz {
     id: number;
@@ -35,6 +34,18 @@ const QuizTaker: React.FC = () => {
         }
     }, [id]);
 
+    const handleSubmit = () => {
+        let newScore = 0;
+        answers.forEach((answerPair, index) => {
+            answerPair.forEach(answer => {
+                if (quiz && quiz.questions[index].correctAnswers.includes(answer)) {
+                    newScore += quiz.questions[index].points ?? 1; // Додали points до розрахунку
+                }
+            });
+        });
+        setScore(newScore);
+    };
+
     useEffect(() => {
         if (timeLeft !== null && timeLeft > 0) {
             const timer = setTimeout(() => {
@@ -44,7 +55,7 @@ const QuizTaker: React.FC = () => {
         } else if (timeLeft === 0) {
             handleSubmit();
         }
-    }, [timeLeft]);
+    }, [timeLeft,handleSubmit]);
 
     const handleNext = () => {
         if (currentQuestion < (quiz?.questions.length ?? 0) - 1) {
@@ -64,17 +75,7 @@ const QuizTaker: React.FC = () => {
         setAnswers(newAnswers);
     };
 
-    const handleSubmit = () => {
-        let newScore = 0;
-        answers.forEach((answerPair, index) => {
-            answerPair.forEach(answer => {
-                if (quiz && quiz.questions[index].correctAnswers.includes(answer)) {
-                    newScore += quiz.questions[index].points ?? 1; // Додали points до розрахунку
-                }
-            });
-        });
-        setScore(newScore);
-    };
+
 
     const handleReview = () => {
         setReviewMode(true);
