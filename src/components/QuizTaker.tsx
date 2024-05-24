@@ -102,7 +102,6 @@ const QuizTaker: React.FC = () => {
         );
     }
 
-    const points = quiz.questions[currentQuestion]?.points ?? 0; // Додали points
 
     return (
         <div className="container mx-auto mt-40 w-3/4 p-4 bg-white rounded-lg shadow-lg ">
